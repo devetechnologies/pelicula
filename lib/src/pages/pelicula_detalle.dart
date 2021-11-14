@@ -9,6 +9,11 @@ class PeliculaDetalle extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           _crearAppBar(pelicula),
+           SliverList(
+              delegate: SliverChildListDelegate([
+            SizedBox(height: 10.0),
+            _posterTitulo(context, pelicula),
+          ])),
         ],
       ),
     );
@@ -35,5 +40,52 @@ class PeliculaDetalle extends StatelessWidget {
       ),
     );
   }
+ Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      child: Row(
+        children: <Widget>[
+          Hero(
+              tag: pelicula.uniqueId,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image(
+                  image: NetworkImage(pelicula.getPosterImage()),
+                  height: 100.0,
+                ),
+              )),
+          SizedBox(
+            width: 20.0,
+          ),
+          Flexible(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                pelicula.titulo,
+                style: Theme.of(context).textTheme.headline4,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                pelicula.tituloOriginal,
+                style: Theme.of(context).textTheme.headline6,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Row(
+                children: <Widget>[
+                  Icon(Icons.star_border),
+                  Text(
+                    pelicula.votosAveraje.toString(),
+                    style: Theme.of(context).textTheme.subtitle2,
+                  )
+                ],
+              )
+            ],
+          ))
+        ],
+      ),
+    );
+  }
+  
 
 }
