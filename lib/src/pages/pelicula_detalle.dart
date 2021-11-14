@@ -13,6 +13,8 @@ class PeliculaDetalle extends StatelessWidget {
               delegate: SliverChildListDelegate([
             SizedBox(height: 10.0),
             _posterTitulo(context, pelicula),
+            _descripcion(pelicula)
+
           ])),
         ],
       ),
@@ -87,5 +89,11 @@ class PeliculaDetalle extends StatelessWidget {
     );
   }
   
+  Widget _descripcion(Pelicula pelicula){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 20.0),
+      child: Text(pelicula.overview,textAlign: TextAlign.justify,),
+    );
 
+  }
 }
