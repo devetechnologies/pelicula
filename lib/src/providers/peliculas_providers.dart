@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:pelicula/src/models/actores_model.dart';
 import 'package:pelicula/src/models/pelicula_model.dart';
 
 class PeliculaProvider {
@@ -56,9 +57,12 @@ class PeliculaProvider {
     return resp;
   }
 
-  Future<List<Pelicula>> getActor() async {
-    final url = Uri.https(_url, '');
-    return _procesarPelicula(url, '');
+  Future<List<Actor>> getActores(String peliculaId) async {
+    final url = Uri.https(_url, '/public/actor_pelicula',{'id_pelicula': peliculaId});
+    final resp = await http.get(url);
+    final decodeData = json.decode(resp.body);
+    final cast = Cast.fromJsonList(decodeData['results']);
+    return cast.actores;
   }
 
   Future<List<Pelicula>> buscarPeliculas() async {

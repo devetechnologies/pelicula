@@ -1,5 +1,9 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:pelicula/src/models/actores_model.dart';
 import 'package:pelicula/src/models/pelicula_model.dart';
+import 'package:pelicula/src/providers/peliculas_providers.dart';
 
 class PeliculaDetalle extends StatelessWidget {
   @override
@@ -95,5 +99,18 @@ class PeliculaDetalle extends StatelessWidget {
       child: Text(pelicula.overview,textAlign: TextAlign.justify,),
     );
 
+  }
+
+  Widget _crearCasting(Pelicula pelicula){
+    final peliculaProvider = PeliculaProvider();
+    return FutureBuilder(
+      future: peliculaProvider.getActores(pelicula.id.toString()),
+      builder: (context, AsyncSnapshot snapshot){
+        return _createActoresPageView(snapshot.data);
+      });
+  }
+
+  Widget _createActoresPageView(List<Actor> actores){
+    return SizedBox();
   }
 }
